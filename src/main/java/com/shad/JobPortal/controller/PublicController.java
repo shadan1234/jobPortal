@@ -41,7 +41,6 @@ public class PublicController {
     public ResponseEntity<String> createAccount(@RequestBody User user) {
         try{
             User newUser = new User();
-            System.out.println(user.getName());
             newUser.setEmail(user.getEmail());
             newUser.setPassword(user.getPassword());
             newUser.setName(user.getName());

@@ -22,7 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
 
 
 @Configuration
@@ -55,11 +55,11 @@ public class SpringSecurityConfigDev {
                         authorizationManagerRequestMatcherRegistry
                                 .requestMatchers("/user/**").authenticated()
                                 .requestMatchers("/employer/**").hasAnyRole("EMPLOYER")
-                                .anyRequest().permitAll());
+                                .anyRequest().permitAll())
 
-//                .sessionManagement(httpSecuritySessionManagementConfigurer ->
-//                        httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .sessionManagement(httpSecuritySessionManagementConfigurer ->
+                        httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

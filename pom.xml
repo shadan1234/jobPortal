@@ -47,6 +47,12 @@
 			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>6.4.1</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.36</version>
@@ -108,7 +114,6 @@
 			<artifactId>transactions-spring-boot-starter</artifactId>
 			<version>6.0.0</version>
 		</dependency>
-
 
 	</dependencies>
 
