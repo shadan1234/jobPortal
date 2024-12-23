@@ -1,9 +1,11 @@
 package com.shad.JobPortal.controller;
 
+import com.shad.JobPortal.dto.StatusUpdateDTO;
 import com.shad.JobPortal.entity.Application;
 import com.shad.JobPortal.entity.Job;
 import com.shad.JobPortal.repository.ApplicationRepository;
 import com.shad.JobPortal.repository.JobRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@Slf4j
 public class EmployerController {
 
 
@@ -48,7 +51,7 @@ public class EmployerController {
             List<Application> applicationList = applicationRepository.findAll();
             List<Application> applications = new ArrayList<>();
             for (Application application : applicationList) {
-              
+
                 if (id.equals(application.getJobId())) {
 
                     applications.add(application);
@@ -56,7 +59,7 @@ public class EmployerController {
             }
             return ResponseEntity.ok(applications);
         }catch(Exception e){
-            System.out.println(e);
+            log.error(e.getMessage());
             return ResponseEntity.internalServerError().body(null);
         }
     }
@@ -85,18 +88,18 @@ public class EmployerController {
         return ResponseEntity.ok("Job deleted successfully");
     }
 
-    @PutMapping("employer/applications/status")
-    public String updateApplication(@RequestBody Application application){
-        Optional<Application> applicationFromDb = applicationRepository.findById(application.getId());
-        if(applicationFromDb.isPresent()){
+    @PutMapping("employer/applications/status/{id}")
+    public String updateApplication(@PathVariable ObjectId id, @RequestBody StatusUpdateDTO statusUpdateDTO) {
+        Optional<Application> applicationFromDb = applicationRepository.findById(id);
+        if (applicationFromDb.isPresent()) {
             Application existingApplication = applicationFromDb.get();
-             existingApplication.setStatus(application.getStatus());
+            existingApplication.setStatus(statusUpdateDTO.getStatus()); // Extract the status value
             applicationRepository.save(existingApplication);
-            return "Job updated successfully";
+            return "Application status updated successfully";
         } else {
-            return "Job not found with ID: " + application.getId();
-
+            return "Application not found with ID: " + id;
         }
     }
+
 
 }
