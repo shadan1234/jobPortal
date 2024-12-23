@@ -25,7 +25,7 @@ public class Job {
     private String jobDescription;
     @NotNull
     private String jobLocation;
-
+    @NotNull
     private String empId;
 
 
